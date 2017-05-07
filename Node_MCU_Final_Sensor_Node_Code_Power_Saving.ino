@@ -16,7 +16,7 @@
 
 #define FALSE 0
 
-#define SLEEPTIME 45                    // Deep Sleep Time setting in Seconds for NodeMCU
+#define SLEEPTIME 120                    // Deep Sleep Time setting in Seconds for NodeMCU
 
 
 // Initialize DHT sensor object
@@ -48,8 +48,9 @@ void setup() {
 
     /* Set Baud rate for Serial Debug Monitor */
     Serial.begin(115200);
-
+    
     /* Display Initilaization Message on Debug Monitor */
+    Serial.println("  ");    
     Serial.println(F("Remote Distributed Sensor Framework Sensor Node ........Initialization"));
 
     pinMode(9,INPUT);          // Node ID value in Hex (Pin10-Pin5-Pin9) (Node MCU Pins)
@@ -153,10 +154,10 @@ void setup() {
     
   } //end of While Loop
     
-    unsigned int randNumber = random(2000,5000); // get a random delay parameter
-    delay(randNumber);   // random delay of 2 to 5 sec for different nodes to be out of sync
+    unsigned int randNumber = random(1000,3000); // get a random delay parameter
+    delay(randNumber*NodeID);   // random delay of 2 to 5 sec for different nodes to be out of sync
     
-    Serial.println("Going into deep sleep for approx. 45 seconds");
+    Serial.println("Going into deep sleep for approx. 2 mins...");
 
     // command NodeMCU to go to deep sleep and wakeup with RF disabled
     ESP.deepSleep(SLEEPTIME*1000000,WAKE_RF_DISABLED); 
@@ -168,7 +169,7 @@ void loop() {
     //Do nothing here. The Setup() function takes care of it all as the 
     //ESP resets each time after it wakes from sleep and executes Setup
      
-    Serial.println("Going into deep sleep for 45 seconds... ");
+    Serial.println("Going into deep sleep for approx. 2 mins... ");
     
     // command NodeMCU to go to deep sleep and wakeup with RF disabled
     ESP.deepSleep(SLEEPTIME*1000000,WAKE_RF_DISABLED); 
